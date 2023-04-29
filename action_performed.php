@@ -96,3 +96,22 @@ if(!empty($_REQUEST['action_type']) && $_REQUEST['action_type'] == 'add') {
 
     header("location:".$redirectURL);
 }
+elseif(!empty($_REQUEST['action_type']) && $_REQUEST['action_type'] == 'delete' && !empty($_GET['id'])){ // If Delete request is submitted
+    // Delete data from the database
+    $conditions = array('id' => $_GET['id']);
+    $delete = $db->delete($tblName, $conditions);
+
+    if($delete){
+        $status = 'success';
+        $statusMsg = 'User data has been deleted successfully!';
+    }else{
+        $statusMsg = 'Something went wrong, please try again after some time.';
+    }
+
+    // Store status into the SESSION
+    $sessData['status']['type'] = $status;
+    $sessData['status']['msg'] = $statusMsg;
+    $_SESSION['sessData'] = $sessData;
+
+    header("location:".$redirectURL);
+}
