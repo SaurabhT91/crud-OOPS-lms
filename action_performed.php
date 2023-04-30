@@ -115,3 +115,87 @@ elseif(!empty($_REQUEST['action_type']) && $_REQUEST['action_type'] == 'delete' 
 
     header("location:".$redirectURL);
 }
+elseif(!empty($_REQUEST['action_type']) && $_REQUEST['action_type'] == 'update' && !empty($_POST['id'])) { // If Edit request is submitted
+    $redirectURL = 'edit.php?id=' . $_POST['id'];
+
+    // Get user's input
+    $postData = $_POST;
+    $name = !empty($_POST['Lead_name']) ? trim($_POST['Lead_name']) : '';
+    $email = !empty($_POST['Contact_number']) ? trim($_POST['Contact_number']) : '';
+    $phone = !empty($_POST['Address']) ? trim($_POST['Address']) : '';
+    $city = !empty($_POST['City'])?trim($_POST['City']):'';
+    $State_name = !empty($_POST['State_name'])?trim($_POST['State_name']):'';
+    $employment = !empty($_POST['Employment_type'])?trim($_POST['Employment_type']):'';
+    $Loan = !empty($_POST['Loan_status'])?trim($_POST['Loan_status']):'';
+    $User_name = !empty($_POST['User_name'])?trim($_POST['User_name']):'';
+    $password = !empty($_POST['Password'])?trim($_POST['Password']):'';
+
+    // Validate form fields
+    if (empty($name)) {
+        $valErr .= 'Please enter your name.<br/>';
+    }
+    if (empty($phone)) {
+        $valErr .= 'Please enter your phone no.<br/>';
+    }
+    if (empty($address)) {
+        $valErr .= 'Please enter your phone no.<br/>';
+    }
+    if (empty($city)) {
+        $valErr .= 'Please choose city<br/>';
+    }
+    if (empty($state)) {
+        $valErr .= 'Please choose city<br/>';
+    }
+    if (empty($employment)) {
+        $valErr .= 'Please choose employment type<br/>';
+    }
+    if (empty($loan)) {
+        $valErr .= 'Please enter your loan status.<br/>';
+    }
+    if (empty($User_name)) {
+        $valErr .= 'Please enter your loan status.<br/>';
+    }
+    if (empty($Password)) {
+        $valErr .= 'Please enter your loan status.<br/>';
+    }
+
+    // Check whether user inputs are empty
+    // Check whether user inputs are empty
+    if (!empty($valErr)) {
+        // Insert data into the database
+        $userData = array(
+            'Lead_name' => $name,
+            'Contact_number' => $phone,
+            'Address' => $address,
+            'City' => $city,
+            'State_name' => $State_name,
+            'Employment_type' => $employment,
+            'Loan_status' => $Loan,
+            'User_name'=>$User_name,
+            'Password'=>$password,
+        );
+        $conditions = array('id' => $_POST['id']);
+        $update = $db->update($tblName, $userData, $conditions);
+
+        if ($update) {
+            $status = 'success';
+            $statusMsg = 'User data has been updated successfully!';
+            $postData = '';
+
+            $redirectURL = 'index.php';
+        } else {
+            $statusMsg = 'Something went wrong, please try again after some time.';
+        }
+    } else {
+        $statusMsg = '<p>Please fill all the mandatory fields:</p>' . trim($valErr, '<br/>');
+    }
+
+    // Store status into the SESSION
+    $sessData['postData'] = $postData;
+    $sessData['status']['type'] = $status;
+    $sessData['status']['msg'] = $statusMsg;
+    $_SESSION['sessData'] = $sessData;
+
+    header("location:".$redirectURL);
+
+}
