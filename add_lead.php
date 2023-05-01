@@ -53,28 +53,7 @@ if(!empty($session_Data['postData'])){
                 <div class="form-group">
                     <label for="city"> City </label>
                     <select id="city" name="City">
-                        <!--                    --><?php //$sql_query = "SELECT DISTINCT City FROM lead_data";
-                        //                    $result = mysqli_query($connection, $sql_query);
-                        //                    if(mysqli_num_rows($result) > 0)
-                        //                    {
-                        //                        $options = mysqli_fetch_all($result, MYSQLI_ASSOC);
-                        //                    }
-                        //                    foreach ($options as $option)
-                        //                    {?>
-                        <!---->
-                        <!--                        <option>--><?php //echo $option['City']; ?><!-- </option>-->
-                        <!--                        --><?php
-                        //                    }
-                        //                    ?>
-                        <!--                                        <option value="Delhi"--><?php //if($city ==='delhi'){ echo "selected";} ?><!-->Delhi</option>-->
-                        <!--                                        <option value="Mumbai" --><?php //if($city ==='mumbai'){ echo "selected";} ?><!-->Mumbai</option>-->
-                        <!--                                        <option value="Chennai"--><?php //if($city ==='chennai'){ echo "selected";} ?><!-->Chennai</option>-->
-                        <!--                                        <option value="Kolkata"--><?php //if($city ==='kolkata'){ echo "selected";} ?><!-->Kolkata</option>-->
-                        <!--                                        <option value="Gurugram"--><?php //if($city ==='gurugram'){ echo "selected";} ?><!-->Gurugram</option>-->
-                        <!--                                        <option value="Pune"--><?php //if($city ==='pune'){ echo "selected";} ?><!-->Pune</option>-->
-                        <!--                                        <option value="Bengaluru"--><?php //if($city ==='bengaluru'){ echo "selected";} ?><!-->Bengaluru</option>-->
-                        <!--                                        <option value="Ahemdabad"--><?php //if($city ==='ahemdabad'){ echo "selected";} ?><!-->Ahemdabad</option>-->
-                        <!--                                        <option value="Nagpur"--><?php //if($city ==='nagpur'){ echo "selected";} ?><!-->Nagpur</option>-->
+
                         <option value="Delhi"<?php echo !empty($_POST['City'])?trim($_POST['City']):''; ?>>Delhi</option>
                         <option value="Mumbai"<?php echo !empty($_POST['City'])?trim($_POST['City']):''; ?>>Mumbai</option>
                         <option value="Chennai"<?php echo !empty($_POST['City'])?trim($_POST['City']):''; ?>>Chennai</option>
