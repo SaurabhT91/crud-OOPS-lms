@@ -89,26 +89,7 @@ if(!empty($session_Data['postData'])){
                 <div class="form-group">
                     <label for="state">State</label>
                     <select id="state" name="State_name">
-                        <!--                    --><?php //$sql_query = "SELECT DISTINCT State_name FROM lead_data";
-                        //                    $result = mysqli_query($connection, $sql_query);
-                        //                    if(mysqli_num_rows($result) > 0)
-                        //                    {
-                        //                        $options = mysqli_fetch_all($result, MYSQLI_ASSOC);
-                        //                    }
-                        //                    foreach ($options as $option)
-                        //                    {?>
-                        <!---->
-                        <!--                        <option>--><?php //echo $option['State_name']; ?><!-- </option>-->
-                        <!--                        --><?php
-                        //                    }
-                        //                    ?>
-                        <!--                                        <option value="delhi"--><?php //if($SN ==='delhi'){ echo "selected";} ?><!-->Delhi</option>-->
-                        <!--                                        <option value="maharashtra"--><?php //if($SN ==='maharashtra'){ echo "selected";} ?><!-->Maharashtra</option>-->
-                        <!--                                        <option value="tamil nadu"--><?php //if($SN ==='tamil nadu'){ echo "selected";} ?><!-->Tamil Nadu</option>-->
-                        <!--                                        <option value="west bengal"--><?php //if($SN ==='west bengal'){ echo "selected";} ?><!-->west bengal</option>-->
-                        <!--                                        <option value="haryana"--><?php //if($SN ==='haryana'){ echo "selected";} ?><!-->Haryana</option>-->
-                        <!--                                        <option value="karnataka"--><?php //if($SN ==='karnataka'){ echo "selected";} ?><!-->Karnataka</option>-->
-                        <!--                                        <option value="Gujarat"--><?php //if($SN ==='Gujarat'){ echo "selected";} ?><!-->Gujarat</option>-->
+
                         <option value="delhi"<?php echo !empty($_POST['State_name'])?trim($_POST['State_name']):''; ?>>Delhi</option>
                         <option value="maharashtra"<?php echo !empty($_POST['State_name'])?trim($_POST['State_name']):''; ?>>Maharashtra</option>
                         <option value="tamil nadu"<?php echo !empty($_POST['State_name'])?trim($_POST['State_name']):''; ?>>Tamil Nadu</option>
@@ -121,11 +102,7 @@ if(!empty($session_Data['postData'])){
                 <br>
                 <div class="form-group">
                     <legend>Employment Type</legend>
-                    <!--               -->
-                    <!--                <label><input type="radio" value="salaried" name="employment_type"--><?php //echo !empty($postData['Employment_type'])?$postData['Employment_type']:''; ?><!--//>Salaried</label>-->
-                    <!--                <label><input type="radio" value="Self employed" name="employment_type"--><?php //echo !empty($postData['Employment_type'])?$postData['Employment_type']:'';if($ET === "Self employed" ){ echo "checked";} ?><!--//>Self employed</label>-->
-                    <!--                <label><input type="radio" value="unemployed" name="employment_type"--><?php //if($ET === "unemployed" ){ echo "checked";} ?><!--//>Not employed</label>-->
-                    <!--                -->
+
                     <label><input type="radio" value="salaried" name="Employment_type"<?php echo !empty($_POST['Employment_type'])?trim($_POST['Employment_type']):'';?>>Salaried</label>
                     <label><input type="radio" value="Self employed" name="Employment_type"<?php echo !empty($_POST['Employment_type'])?trim($_POST['Employment_type']):'';?>>Self employed</label>
                     <label><input type="radio" value="unemployed" name="Employment_type"<?php echo !empty($_POST['Employment_type'])?trim($_POST['Employment_type']):''; ?>>Not employed</label>
@@ -133,10 +110,7 @@ if(!empty($session_Data['postData'])){
                 </div><br>
                 <div class="form-group">
                     <legend>Existing Loan</legend>
-                    <!--                -->
-                    <!--                <label><input type="radio" name="existing_loan" value="no"--><?php //if($loan === "no" ){ echo "checked";} ?><!--//>no</label><br>-->
-                    <!--                <label><input type="radio" name="existing_loan" value="yes"--><?php //if($loan === "yes" ){ echo "checked";} ?><!--//>yes</label><br>-->
-                    <!---->
+
                     <label><input type="radio" name="Loan_status" value="no"<?php echo !empty($_POST['Loan_status'])?trim($_POST['Loan_status']):''; ?>>no</label><br>
                     <label><input type="radio" name="Loan_status" value="yes"<?php echo !empty($_POST['Loan_status'])?trim($_POST['Loan_status']):''; ?>>yes</label><br>
 
