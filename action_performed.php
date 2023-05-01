@@ -121,8 +121,8 @@ elseif(!empty($_REQUEST['action_type']) && $_REQUEST['action_type'] == 'update' 
     // Get user's input
     $postData = $_POST;
     $name = !empty($_POST['Lead_name']) ? trim($_POST['Lead_name']) : '';
-    $email = !empty($_POST['Contact_number']) ? trim($_POST['Contact_number']) : '';
-    $phone = !empty($_POST['Address']) ? trim($_POST['Address']) : '';
+    $phone = !empty($_POST['Contact_number']) ? trim($_POST['Contact_number']) : '';
+    $address = !empty($_POST['Address']) ? trim($_POST['Address']) : '';
     $city = !empty($_POST['City'])?trim($_POST['City']):'';
     $State_name = !empty($_POST['State_name'])?trim($_POST['State_name']):'';
     $employment = !empty($_POST['Employment_type'])?trim($_POST['Employment_type']):'';

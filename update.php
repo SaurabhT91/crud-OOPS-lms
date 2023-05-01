@@ -37,8 +37,8 @@ if(empty($userData)){
 
 // Get submitted form data
 $postData = array();
-if(!empty($sessData['postData'])){
-    $postData = $sessData['postData'];
+if(!empty($session_Data['postData'])){
+    $postData = $session_Data['postData'];
     unset($_SESSION['postData']);
 }
 ?>
