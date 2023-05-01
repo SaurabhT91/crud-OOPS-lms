@@ -66,7 +66,7 @@
                 <td><?php echo $row['Employment_type']; ?></td>
                 <td><?php echo $row['Loan_status']; ?></td>
                 <td>
-                    <a href="edit.php?id=<?php echo $row['id']; ?>" class="btn btn-warning">edit</a>
+                    <a href="update.php?id=<?php echo $row['id']; ?>" class="btn btn-warning">Update</a>
                     <a href="action_performed.php?action_type=delete&id=<?php echo $row['id']; ?>" class="btn btn-danger" onclick="return confirm('Are you sure to delete data?');">delete</a>
                 </td>
             </tr>

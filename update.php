@@ -106,14 +106,14 @@ if(!empty($sessData['postData'])){
 
                 <label><input type="radio" value="salaried" name="Employment_type"<?php if($userData['Employment_type']==="salaried"){ echo "checked"; } ?>>Salaried</label>
                 <label><input type="radio" value="Self employed" name="Employment_type"<?php if($userData['Employment_type']==="Self employed"){ echo "checked"; } ?>>Self employed</label>
-                <label><input type="radio" value="unemployed" name="Employment_type"<?php if($userData['Employment_type']==="unemployed"){ echo "checked"; } ?>>>Not employed</label>
+                <label><input type="radio" value="unemployed" name="Employment_type"<?php if($userData['Employment_type']==="unemployed"){ echo "checked"; } ?>>Not employed</label>
 
             </div><br>
             <div class="form-group">
                 <legend>Existing Loan</legend>
 
                 <label><input type="radio" name="Loan_status" value="no"<?php if($userData['Loan_status']==="no"){ echo "checked"; } ?>>no</label><br>
-                <label><input type="radio" name="Loan_status" value="yes"<?php if($userData['Loan_status']==="delhi"){ echo "checked"; } ?>>yes</label><br>
+                <label><input type="radio" name="Loan_status" value="yes"<?php if($userData['Loan_status']==="yes"){ echo "checked"; } ?>>yes</label><br>
 
             </div><br>
             <div class="form-group">

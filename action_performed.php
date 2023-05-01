@@ -116,7 +116,7 @@ elseif(!empty($_REQUEST['action_type']) && $_REQUEST['action_type'] == 'delete' 
     header("location:".$redirectURL);
 }
 elseif(!empty($_REQUEST['action_type']) && $_REQUEST['action_type'] == 'update' && !empty($_POST['id'])) { // If Edit request is submitted
-    $redirectURL = 'edit.php?id=' . $_POST['id'];
+    $redirectURL = 'update.php?id=' . $_POST['id'];
 
     // Get user's input
     $postData = $_POST;
