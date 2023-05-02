@@ -27,13 +27,29 @@ if(!empty($_GET['id'])){
         'return_type' => 'single'
     );
     $userData = $db->getRows('lead_data', $conditons);
+    $action_type = "update";
+    $page_type = "Update lead";
 }
-
-// Redirect to list page if invalid request submitted
-if(empty($userData)){
-    header("Location: index.php");
-    exit;
+else
+{
+    $userData['Lead_name'] = '';
+    $userData['Contact_number'] = '';
+    $userData['Address'] = '';
+    $userData['City'] = '';
+    $userData['State_name'] = '';
+    $userData['Employment_type'] = '';
+    $userData['Loan_status'] = '';
+    $userData['User_name'] = '';
+    $userData['Password'] = '';
+    $userData['id']='';
+    $action_type = "add";
+    $page_type = "Add lead";
 }
+//// Redirect to list page if invalid request submitted
+//if(empty($userData)){
+//    header("Location: index.php");
+//    exit;
+//}
 
 // Get submitted form data
 $postData = array();
@@ -45,7 +61,7 @@ if(!empty($session_Data['postData'])){
 
 <div class="row">
     <div class="col-md-12 head">
-        <h5>Edit User</h5>
+        <h5><?php echo $page_type; ?></h5>
 
         <!-- Back link -->
         <div class="float-right">
