@@ -4,12 +4,13 @@
 session_start();
 
 // Get data from session
-$sessData = !empty($_SESSION['session_Data'])?$_SESSION['session_Data']:'';
+$session_Data = !empty($_SESSION['session_Data'])?$_SESSION['session_Data']:'';
 
 // Get status from session
-if(!empty($sessData['status']['msg'])){
-    $statusMsg = $sessData['status']['msg'];
-    $status = $sessData['status']['type'];
+if(!empty($session_Data['status']['msg']))
+{
+    $statusMsg = $session_Data['status']['msg'];
+    $status = $session_Data['status']['type'];
     unset($_SESSION['session_Data']['status']);
 }
 
@@ -45,15 +46,12 @@ else
     $action_type = "add";
     $page_type = "Add lead";
 }
-//// Redirect to list page if invalid request submitted
-//if(empty($userData)){
-//    header("Location: index.php");
-//    exit;
-//}
 
 // Get submitted form data
 $postData = array();
-if(!empty($session_Data['postData'])){
+
+if(!empty($session_Data['postData']))
+{
     $postData = $session_Data['postData'];
     unset($_SESSION['postData']);
 }
