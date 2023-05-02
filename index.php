@@ -40,7 +40,7 @@
             <div class="alert alert-<?php echo $status; ?>"><?php echo $statusMsg; ?></div>
         <?php } ?>
 
-        <!-- List the users -->
+        <!-- List of lead -->
         <table class="table table-striped table-bordered">
             <thead class="thead-dark">
             <tr>
