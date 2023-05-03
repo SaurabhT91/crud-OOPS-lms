@@ -27,7 +27,9 @@ if(!empty($_GET['id'])){
         ),
         'return_type' => 'single'
     );
+
     $userData = $db->getRows('lead_data', $conditons);
+    var_dump($userData);
     $action_type = "update";
     $page_type = "Update lead";
 }

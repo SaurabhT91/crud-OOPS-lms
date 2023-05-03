@@ -27,121 +27,118 @@ class DB
 //      @param string name of the table
 //      @param array select, where, order_by, limit and return_type conditions
 
-    public function getRows($table, $conditions = array())
+    public function get_all_leads($table)
     {
-        $sql = 'SELECT ';
-        $sql .= array_key_exists("select", $conditions) ? $conditions['select'] : '*';
-        $sql .= ' FROM ' . $table;
-        if (array_key_exists("where", $conditions)) {
-            $sql .= ' WHERE ';
-            $i = 0;
-            foreach ($conditions['where'] as $key => $value) {
-                $pre = ($i > 0) ? ' AND ' : '';
-                $sql .= $pre . $key . " = '" . $value . "'";
-                $i++;
-            }
-        }
 
-        if (array_key_exists("order_by", $conditions)) {
-            $sql .= ' ORDER BY ' . $conditions['order_by'];
-        }
+        $sql_query = 'SELECT * FROM '.$table;
+        $statement = $this->db->prepare($sql_query);
 
-        if (array_key_exists("start", $conditions) && array_key_exists("limit", $conditions)) {
-            $sql .= ' LIMIT ' . $conditions['start'] . ',' . $conditions['limit'];
-        } elseif (!array_key_exists("start", $conditions) && array_key_exists("limit", $conditions)) {
-            $sql .= ' LIMIT ' . $conditions['limit'];
-        }
+        $statement->execute();
 
+        return $statement->fetchAll();
+
+    }
+
+    public function get_all_users($table)
+    {
+
+        $sql_query = 'SELECT * FROM USERS';
+        $statement = $this->db->prepare($sql_query);
+
+        $statement->execute();
+
+        return $statement->fetchAll();
+
+    }
+    public function get_lead_by_id($table,$conditions)
+    {
+
+        $sql_query = "SELECT * FROM ".$table." WHERE id = ".$conditions;
+
+        $statement = $this->db->prepare($sql_query);
+        $statement->execute();
+        return $statement->fetch(PDO::FETCH_ASSOC);
+
+    }
+    public function get_leads_by_USER_ID($table,$conditions)
+    {
+
+        $sql_query = "SELECT * FROM ".$table." WHERE USER_ID = ".$conditions;
+
+        $statement = $this->db->prepare($sql_query);
+        $statement->execute();
+        return $statement->fetch(PDO::FETCH_ASSOC);
+
+    }
+    public function get_user_by_user_id($table,$conditions)
+    {
+
+        $id = $conditions;
+
+        $sql_query = "SELECT * FROM " . $table . " WHERE USER_ID = " . $id;
+
+        $statement = $this->db->prepare($sql_query);
+        $statement->execute();
+        return $statement->fetch(PDO::FETCH_ASSOC);
+    }
+    // Insert data into the database
+    // @param string name of the table
+    // @param array the data for inserting into the table
+
+    public function insert_lead($table, $data)
+    {
+        $name=$data['Lead_name'];
+        $number=$data['Contact_number'];
+        $address=$data['Address'];
+        $City=$data['City'];
+        $State_name=$data['State_name'];
+        $Employment_type=$data['Employment_type'];
+        $Loan_status=$data['Loan_status'];
+        $user_id=$data['USER_ID'];
+
+
+        $sql = "INSERT INTO lead_data (Lead_Name, Contact_number, Address, City, State_name, Employment_type, Loan_status,USER_ID) VALUES ('$name', '$number', '$address', '$City', '$State_name', '$Employment_type', '$Loan_status', '$user_id');";
         $query = $this->db->prepare($sql);
-        $query->execute();
+        $insert = $query->execute();
+        return $insert ? $this->db->lastInsertId() : false;
 
-        if (array_key_exists("return_type", $conditions) && $conditions['return_type'] != 'all') {
-            switch ($conditions['return_type']) {
-                case 'count':
-                    $data = $query->rowCount();
-                    break;
-                case 'single':
-                    $data = $query->fetch(PDO::FETCH_ASSOC);
-                    break;
-                default:
-                    $data = '';
-            }
-        } else {
-            if ($query->rowCount() > 0) {
-                $data = $query->fetchAll();
-            }
-        }
-        return !empty($data) ? $data : false;
-    }
-
-
-     // Insert data into the database
-     // @param string name of the table
-     // @param array the data for inserting into the table
-
-    public function insert($table, $data)
-    {
-        if (!empty($data) && is_array($data)) {
-
-            $columnString = implode(',', array_keys($data));
-            $valueString = ":" . implode(',:', array_keys($data));
-            $sql = "INSERT INTO " . $table . " (" . $columnString . ") VALUES (" . $valueString . ")";
-            $query = $this->db->prepare($sql);
-            foreach ($data as $key => $val) {
-                $query->bindValue(':' . $key, $val);
-            }
-            $insert = $query->execute();
-            return $insert ? $this->db->lastInsertId() : false;
-        } else {
-            return false;
-        }
 
     }
-
 
     public function delete($table,$conditions){
         $whereSql = '';
-        if(!empty($conditions)&& is_array($conditions)){
-            $whereSql .= ' WHERE ';
-            $i = 0;
-            foreach($conditions as $key => $value){
-                $pre = ($i > 0)?' AND ':'';
-                $whereSql .= $pre.$key." = '".$value."'";
-                $i++;
-            }
-        }
-        $sql = "DELETE FROM ".$table.$whereSql;
+
+        $sql = "DELETE FROM ".$table." where id = ".$conditions['id'];
         $delete = $this->db->exec($sql);
         return $delete?$delete:false;
     }
 
-    public function update($table,$data,$conditions){
-        if(!empty($data) && is_array($data)){
-            $colvalSet = '';
-            $whereSql = '';
-            $i = 0;
 
-            foreach($data as $key=>$val){
-                $pre = ($i > 0)?', ':'';
-                $colvalSet .= $pre.$key."='".$val."'";
-                $i++;
-            }
-            if(!empty($conditions)&& is_array($conditions)){
-                $whereSql .= ' WHERE ';
-                $i = 0;
-                foreach($conditions as $key => $value){
-                    $pre = ($i > 0)?' AND ':'';
-                    $whereSql .= $pre.$key." = '".$value."'";
-                    $i++;
-                }
-            }
-            $sql = "UPDATE ".$table." SET ".$colvalSet.$whereSql;
-            $query = $this->db->prepare($sql);
-            $update = $query->execute();
-            return $update?$query->rowCount():false;
-        }else{
-            return false;
-        }
+
+    // Update data into the database
+    // @param string name of the table
+    // @param array the data for updating into the table
+    // @param array where condition on updating data
+
+    public function update_lead($table,$data,$conditions){
+
+
+        $id = $conditions['id'];
+        $name=$data['Lead_name'];
+        $number=$data['Contact_number'];
+        $address=$data['Address'];
+        $City=$data['City'];
+        $State_name=$data['State_name'];
+        $Employment_type=$data['Employment_type'];
+        $Loan_status=$data['Loan_status'];
+        $user_id=$data['User_Id'];
+
+
+        $sql = "UPDATE lead_data SET Lead_name='$name',Contact_number='$number',Address='$address',City='$City',State_name='$State_name',Employment_type='$Employment_type',Loan_status='$Loan_status',USER_ID='$user_id' 
+                WHERE id ='$id'";
+        $query = $this->db->prepare($sql);
+        $update = $query->execute();
+        return $update?$query->rowCount():false;
     }
 }
 
