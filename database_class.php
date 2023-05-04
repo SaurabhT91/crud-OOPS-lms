@@ -141,6 +141,3 @@ class DB
         return $update?$query->rowCount():false;
     }
 }
-
-
-
