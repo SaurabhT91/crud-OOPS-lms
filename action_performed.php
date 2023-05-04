@@ -14,6 +14,10 @@ $postData = $statusMsg = $valErr = '';
 $status = 'danger';
 $redirectURL = 'index.php';
 
+
+//echo $_REQUEST['action_type'];
+//die();
+
 // If Add request is submitted
 if(!empty($_REQUEST['action_type']) && $_REQUEST['action_type'] == 'add') {
     $redirectURL = 'index.php';
@@ -26,8 +30,8 @@ if(!empty($_REQUEST['action_type']) && $_REQUEST['action_type'] == 'add') {
     $State_name = !empty($_POST['State_name'])?trim($_POST['State_name']):'';
     $employment = !empty($_POST['Employment_type'])?trim($_POST['Employment_type']):'';
     $Loan = !empty($_POST['Loan_status'])?trim($_POST['Loan_status']):'';
-    $User_name = !empty($_POST['User_name'])?trim($_POST['User_name']):'';
-    $password = !empty($_POST['Password'])?trim($_POST['Password']):'';
+    $USER_ID = !empty($_POST['USER_ID'])?trim($_POST['USER_ID']):'';
+
 
     // Validate form fields
     if (empty($name)) {
@@ -49,13 +53,11 @@ if(!empty($_REQUEST['action_type']) && $_REQUEST['action_type'] == 'add') {
         $valErr .= 'Please choose employment type<br/>';
     }
     if (empty($loan)) {
-        $valErr .= 'Please enter your loan status.<br/>';
+        $valErr .= 'Please enter leads loan status.<br/>';
     }
-    if (empty($User_name)) {
-        $valErr .= 'Please enter your loan status.<br/>';
-    }
-    if (empty($Password)) {
-        $valErr .= 'Please enter your loan status.<br/>';
+    if (empty($USER_ID)) {
+        $valErr .= 'Please enter USER ID.<br/>';
+
     }
 
     // Check whether user inputs are empty
@@ -69,11 +71,10 @@ if(!empty($_REQUEST['action_type']) && $_REQUEST['action_type'] == 'add') {
             'State_name' => $State_name,
             'Employment_type' => $employment,
             'Loan_status' => $Loan,
-            'User_name'=>$User_name,
-            'Password'=>$password,
+            'USER_ID'=>$USER_ID,
         );
-//            var_dump($userData);
-        $insert = $db->insert($tblName, $userData);
+//            var_dump($leadData);
+        $insert = $db->insert_lead($tblName, $userData);
 
         if ($insert) {
             $status = 'success';
@@ -115,7 +116,8 @@ elseif(!empty($_REQUEST['action_type']) && $_REQUEST['action_type'] == 'delete' 
 
     header("location:".$redirectURL);
 }
-elseif(!empty($_REQUEST['action_type']) && $_REQUEST['action_type'] == 'update' && !empty($_POST['id'])) { // If Edit request is submitted
+elseif(!empty($_REQUEST['action_type']) && $_REQUEST['action_type'] == 'update' && !empty($_POST['id']))
+{ // If Edit request is submitted
     $redirectURL = 'form.php?id=' . $_POST['id'];
 
     // Get user's input
@@ -127,8 +129,7 @@ elseif(!empty($_REQUEST['action_type']) && $_REQUEST['action_type'] == 'update' 
     $State_name = !empty($_POST['State_name'])?trim($_POST['State_name']):'';
     $employment = !empty($_POST['Employment_type'])?trim($_POST['Employment_type']):'';
     $Loan = !empty($_POST['Loan_status'])?trim($_POST['Loan_status']):'';
-    $User_name = !empty($_POST['User_name'])?trim($_POST['User_name']):'';
-    $password = !empty($_POST['Password'])?trim($_POST['Password']):'';
+    $User_Id = !empty($_POST['USER_ID'])?trim($_POST['USER_ID']):'';
 
     // Validate form fields
     if (empty($name)) {
@@ -152,10 +153,7 @@ elseif(!empty($_REQUEST['action_type']) && $_REQUEST['action_type'] == 'update' 
     if (empty($loan)) {
         $valErr .= 'Please enter your loan status.<br/>';
     }
-    if (empty($User_name)) {
-        $valErr .= 'Please enter your loan status.<br/>';
-    }
-    if (empty($Password)) {
+    if (empty($User_ID)) {
         $valErr .= 'Please enter your loan status.<br/>';
     }
 
@@ -171,11 +169,11 @@ elseif(!empty($_REQUEST['action_type']) && $_REQUEST['action_type'] == 'update' 
             'State_name' => $State_name,
             'Employment_type' => $employment,
             'Loan_status' => $Loan,
-            'User_name'=>$User_name,
-            'Password'=>$password,
+            'User_Id'=>$User_Id,
+
         );
         $conditions = array('id' => $_POST['id']);
-        $update = $db->update($tblName, $userData, $conditions);
+        $update = $db->update_lead($tblName, $userData, $conditions);
 
         if ($update) {
             $status = 'success';
@@ -198,4 +196,11 @@ elseif(!empty($_REQUEST['action_type']) && $_REQUEST['action_type'] == 'update' 
 
     header("location:".$redirectURL);
 
+}
+elseif(!empty($_REQUEST['action_type']) && $_REQUEST['action_type'] == 'search' && !empty($_POST['search']))
+{ // If Edit request is submitted
+//    $redirectURL = 'index.php?id=' . $_POST['id'];
+    $conditions = $_POST['id'];
+    $data = $db->get_lead_by_id('lead_data', $conditions);
+    var_dump($data);
 }
