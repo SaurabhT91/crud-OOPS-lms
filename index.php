@@ -26,6 +26,7 @@ if(isset($_SESSION['LOGGED_IN']))
 
     <input type="hidden" name="action_type" value="Login"/>
     <button>Login</button>
+    <button ><a href="user_signup.php">Sign Up</a></button>
 
 </form>
 </body>
