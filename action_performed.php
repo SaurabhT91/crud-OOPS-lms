@@ -223,3 +223,40 @@ elseif (!empty($_REQUEST['action_type']) && $_REQUEST['action_type'] == 'Login' 
         echo "invalid user name  or password";
     }
 }
+
+elseif(!empty($_REQUEST['action_type']) && $_REQUEST['action_type'] == 'signup')
+{
+    $postData = $_POST;
+    $user_name = !empty($_POST['USER_NAME'])?trim($_POST['USER_NAME']):'';
+    $user_password = !empty($_POST['PASSWORD'])?trim($_POST['PASSWORD']):'';
+    $user_id = !empty($_POST['USER_ID'])?trim($_POST['USER_ID']):'';
+    $name = !empty($_POST['NAME'])?trim($_POST['NAME']):'';
+
+    $userData = array(
+        'USER_NAME' => $user_name,
+        'USER_PASSWORD' => $user_password,
+        'USER_ID' => $user_id,
+        'NAME' => $name,);
+
+
+    $insert = $db->SIGNUP($tblName, $userData);
+
+    if ($insert) {
+        $status = 'success';
+        $statusMsg = 'User data has been added successfully!';
+        $postData = '';
+
+        $redirectURL = 'index.php';
+    } else {
+        $statusMsg = 'Something went wrong, please try again after some time.';
+    }
+
+
+    // Store status into the SESSION
+    $sessData['postData'] = $postData;
+    $sessData['status']['type'] = $status;
+    $sessData['status']['msg'] = $statusMsg;
+    $_SESSION['sessData'] = $sessData;
+
+    header("location: index.php"   );
+}
