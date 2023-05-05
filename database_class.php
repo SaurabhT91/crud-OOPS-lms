@@ -63,23 +63,27 @@ class DB
     public function get_leads_by_USER_ID($table,$conditions)
     {
 
-        $sql_query = "SELECT * FROM ".$table." WHERE USER_ID = ".$conditions;
+        $sql_query = "SELECT * FROM ".$table." WHERE USER_ID = "."'$conditions'";
 
         $statement = $this->db->prepare($sql_query);
         $statement->execute();
-        return $statement->fetch(PDO::FETCH_ASSOC);
+        return $statement->fetchAll();
 
     }
     public function get_user_by_user_id($table,$conditions)
     {
 
-        $id = $conditions;
+        $NAME = $conditions;
 
-        $sql_query = "SELECT * FROM " . $table . " WHERE USER_ID = " . $id;
-
+        $sql_query = "SELECT * FROM " . $table . " WHERE USER_NAME = " ."'$NAME'";
+//        var_dump($sql_query);
+//        die();
         $statement = $this->db->prepare($sql_query);
         $statement->execute();
-        return $statement->fetch(PDO::FETCH_ASSOC);
+        $data = $statement->fetch(PDO::FETCH_ASSOC);
+        return $data;
+//        var_dump($data);
+//        die();
     }
     // Insert data into the database
     // @param string name of the table
