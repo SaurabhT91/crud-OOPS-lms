@@ -14,7 +14,7 @@
     <input type="password" name="PASSWORD"><br>
     <br>
 
-    <input type="hidden" name="action_type" value="<?php $action_type = "Login"; echo $action_type; ?>"/>
+    <input type="hidden" name="action_type" value="Login"/>
     <button>Login</button>
 
 </form>
