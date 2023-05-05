@@ -3,21 +3,15 @@
 // Start session
 session_start();
 
-// Get data from session
-$sessData = !empty($_SESSION['session_Data'])?$_SESSION['session_Data']:'';
-
-// Get status from session
-if(!empty($sessData['status']['msg'])){
-    $statusMsg = $sessData['status']['msg'];
-    $status = $sessData['status']['type'];
-    unset($_SESSION['session_Data']['status']);
+if(!$_SESSION['LOGGED_IN'] === TRUE)
+{
+    header("Location: index.php");
 }
 
 // Include and initialize DB class
 require_once 'database_class.php';
 $db = new DB();
-//echo "database instance created for id:".$_GET['id'];
-//die();
+
 // Fetch the user data by ID
 if(!empty($_GET['id'])){
     $conditions =(int)$_GET['id'];
@@ -40,18 +34,10 @@ else
     $action_type = "add";
     $page_type = "Add lead";
 }
-// Redirect to list page if invalid request submitted
-//if(empty($leadData)){
-//    header("Location: index.php");
-//    exit;
-//}
+
 
 // Get submitted form data
-$postData = array();
-if(!empty($sessData['postData'])){
-    $postData = $sessData['postData'];
-    unset($_SESSION['postData']);
-}
+
 ?>
 
 <div class="row">
@@ -60,7 +46,7 @@ if(!empty($sessData['postData'])){
 
         <!-- Back link -->
         <div class="float-right">
-            <a href="index.php" class="btn btn-success"><i class="back"></i> Back</a>
+            <a href="user_page.php" class="btn btn-success"><i class="back" value="<?php $_SESSION['LOGGED_IN']=TRUE;  ?>"></i> Back</a>
         </div>
     </div>
 
@@ -135,6 +121,7 @@ if(!empty($sessData['postData'])){
             <input type="hidden" name="id" value="<?php echo $leadData['id']; ?>"/>
             <input type="hidden" name="action_type" value="<?php echo $action_type; ?>"/>
             <input type="submit" class="form-control btn-primary" name="submit" value="Save"/>
+
         </form>
     </div>
 </div>
