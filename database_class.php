@@ -144,4 +144,22 @@ class DB
         $update = $query->execute();
         return $update?$query->rowCount():false;
     }
+
+    public function SIGNUP($table, $data)
+    {
+
+        var_dump($data);
+
+        $USER_NAME = $data['USER_NAME'];
+        $PASSWORD = $data['USER_PASSWORD'];
+        $ID = $data['USER_ID'];
+        $NAME = $data['NAME'];
+
+
+
+        $sql = "INSERT INTO users (USER_NAME, USER_PASSWORD , USER_ID, NAME) VALUES ('$USER_NAME', '$PASSWORD', '$ID', '$NAME');";
+        $query = $this->db->prepare($sql);
+        $insert = $query->execute();
+        return $insert ? $this->db->lastInsertId() : false;
+    }
 }
