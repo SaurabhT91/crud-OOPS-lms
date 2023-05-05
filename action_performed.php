@@ -1,6 +1,4 @@
 <?php
-// Start session
-session_start();
 
 // Include and initialize DB class
 require_once 'database_class.php';
@@ -16,11 +14,11 @@ $redirectURL = 'index.php';
 
 
 //echo $_REQUEST['action_type'];
-//die();
+//die();+
 
 // If Add request is submitted
 if(!empty($_REQUEST['action_type']) && $_REQUEST['action_type'] == 'add') {
-    $redirectURL = 'index.php';
+    $redirectURL = 'user_page.php';
     // Get user's input
     $postData = $_POST;
     $name = !empty($_POST['Lead_name'])?trim($_POST['Lead_name']):'';;
@@ -95,7 +93,7 @@ if(!empty($_REQUEST['action_type']) && $_REQUEST['action_type'] == 'add') {
     $sessData['status']['msg'] = $statusMsg;
     $_SESSION['sessData'] = $sessData;
 
-    header("location:".$redirectURL);
+    header("location: user_page.php"   );
 }
 elseif(!empty($_REQUEST['action_type']) && $_REQUEST['action_type'] == 'delete' && !empty($_GET['id'])){ // If Delete request is submitted
     // Delete data from the database
@@ -114,7 +112,7 @@ elseif(!empty($_REQUEST['action_type']) && $_REQUEST['action_type'] == 'delete' 
     $sessData['status']['msg'] = $statusMsg;
     $_SESSION['sessData'] = $sessData;
 
-    header("location:".$redirectURL);
+    header("location: user_page.php");
 }
 elseif(!empty($_REQUEST['action_type']) && $_REQUEST['action_type'] == 'update' && !empty($_POST['id']))
 { // If Edit request is submitted
@@ -194,7 +192,7 @@ elseif(!empty($_REQUEST['action_type']) && $_REQUEST['action_type'] == 'update' 
     $sessData['status']['msg'] = $statusMsg;
     $_SESSION['sessData'] = $sessData;
 
-    header("location:".$redirectURL);
+    header("location: user_page.php");
 
 }
 elseif(!empty($_REQUEST['action_type']) && $_REQUEST['action_type'] == 'search' && !empty($_POST['search']))
@@ -203,4 +201,25 @@ elseif(!empty($_REQUEST['action_type']) && $_REQUEST['action_type'] == 'search' 
     $conditions = $_POST['id'];
     $data = $db->get_lead_by_id('lead_data', $conditions);
     var_dump($data);
+}
+elseif (!empty($_REQUEST['action_type']) && $_REQUEST['action_type'] == 'Login' && !empty($_POST['USER_NAME']))
+{
+    $conditions = $_POST['USER_NAME'];
+    $data = $db->get_user_by_user_id('users', $conditions);
+
+    if ($data['USER_PASSWORD'] === $_POST['PASSWORD'])
+    {
+        session_start();
+        $_SESSION['USER_ID'] = $data['USER_ID'];
+        $_SESSION['NAME']= $data['NAME'];
+        $_SESSION['LOGGED_IN'] = TRUE;
+        ?>
+        <input type="hidden" value="<?php echo $_SESSION['USER_ID'];echo $_SESSION['USER_NAME'] ;?>">
+        <?php
+        header("Location: user_page.php");
+    }
+    else
+    {
+        echo "invalid user name  or password";
+    }
 }
