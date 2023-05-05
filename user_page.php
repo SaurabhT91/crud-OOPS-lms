@@ -50,12 +50,13 @@ $users = $db->get_leads_by_USER_ID('lead_data',$conditions);
                 <th width="5%">id</th>
                 <th width="10%">Name</th>
                 <th width="10%">Contact number</th>
-                <th width="30%">Address</th>
-                <th width="12%">City</th>
+                <th width="25%">Address</th>
+                <th width="10%">City</th>
                 <th width="15%">State</th>
                 <th width="15%">Employment</th>
                 <th width="5%">Loan</th>
                 <th width="5">USER_ID</th>
+                <th width="5">Lead_ID</th>
             </tr>
             </thead>
             <tbody>
@@ -70,6 +71,7 @@ $users = $db->get_leads_by_USER_ID('lead_data',$conditions);
                     <td><?php echo $row['Employment_type']; ?></td>
                     <td><?php echo $row['Loan_status']; ?></td>
                     <td><?php echo $row['USER_ID']; ?></td>
+                    <td><?php echo $row['id']; ?></td>
 
                     <td>
                         <a href="form.php?id=<?php echo $row['id']; ?>" class="btn btn-warning">Update</a>
