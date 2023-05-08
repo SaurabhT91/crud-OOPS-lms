@@ -29,7 +29,6 @@ class DB
             $create = $this->db->prepare($check);
             $create->execute();
 
-
         }
     }
 
@@ -44,8 +43,9 @@ class DB
         $statement = $this->db->prepare($sql_query);
 
         $statement->execute();
-
-        return $statement->fetchAll();
+        $data = $statement->fetchAll();
+        $this->db = null;
+        return $data;
 
     }
 
@@ -56,8 +56,9 @@ class DB
         $statement = $this->db->prepare($sql_query);
 
         $statement->execute();
-
-        return $statement->fetchAll();
+        $data = $statement->fetchAll();
+        $this->db = null;
+        return $data;
 
     }
     public function get_lead_by_id($table,$conditions)
@@ -67,7 +68,9 @@ class DB
 
         $statement = $this->db->prepare($sql_query);
         $statement->execute();
-        return $statement->fetch(PDO::FETCH_ASSOC);
+        $data = $statement->fetch(PDO::FETCH_ASSOC);
+        $this->db = null;
+        return $data;
 
     }
     public function get_leads_by_USER_ID($table,$conditions)
@@ -77,7 +80,10 @@ class DB
 
         $statement = $this->db->prepare($sql_query);
         $statement->execute();
-        return $statement->fetchAll();
+        $data = $statement->fetchAll();
+        $this->db = null;
+        return $data;
+
 
     }
     public function get_user_by_user_id($table,$conditions)
@@ -91,6 +97,7 @@ class DB
         $statement = $this->db->prepare($sql_query);
         $statement->execute();
         $data = $statement->fetch(PDO::FETCH_ASSOC);
+        $this->db = null;
         return $data;
 //        var_dump($data);
 //        die();
@@ -114,9 +121,10 @@ class DB
         $sql = "INSERT INTO lead_data (Lead_Name, Contact_number, Address, City, State_name, Employment_type, Loan_status,USER_ID) VALUES ('$name', '$number', '$address', '$City', '$State_name', '$Employment_type', '$Loan_status', '$user_id');";
         $query = $this->db->prepare($sql);
         $insert = $query->execute();
-        return $insert ? $this->db->lastInsertId() : false;
+        $data = $insert ? $this->db->lastInsertId() : false;
 
-
+        $this->db = null;
+        return $data;
     }
 
     public function delete($table,$conditions){
@@ -124,7 +132,9 @@ class DB
 
         $sql = "DELETE FROM ".$table." where id = ".$conditions['id'];
         $delete = $this->db->exec($sql);
-        return $delete?$delete:false;
+        $data =  $delete?$delete:false;
+        $this->db = null;
+        return $data;
     }
 
 
@@ -152,8 +162,11 @@ class DB
                 WHERE id ='$id'";
         $query = $this->db->prepare($sql);
         $update = $query->execute();
-        return $update?$query->rowCount():false;
+        $data =  $update?$query->rowCount():false;
+        $this->db = null;
+        return $data;
     }
+
 
     public function SIGNUP($table, $data)
     {
@@ -170,6 +183,13 @@ class DB
         $sql = "INSERT INTO users (USER_NAME, USER_PASSWORD , USER_ID, NAME) VALUES ('$USER_NAME', '$PASSWORD', '$ID', '$NAME');";
         $query = $this->db->prepare($sql);
         $insert = $query->execute();
-        return $insert ? $this->db->lastInsertId() : false;
+        $data =  $insert ? $this->db->lastInsertId() : false;
+        $this->db = null;
+        return $data;
     }
+
+
 }
+
+
+
