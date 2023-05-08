@@ -20,6 +20,16 @@ class DB
             } catch (PDOException $e) {
                 die("Failed to connect with MySQL: " . $e->getMessage());
             }
+
+            $check = "CREATE TABLE IF NOT EXISTS USERS (ID int(11) AUTO_INCREMENT, USER_NAME varchar(255) NOT NULL, USER_PASSWORD varchar(255) NOT NULL,USER_ID int, NAME varchar(255) NOT NULL, PRIMARY KEY  (ID))";
+            $create = $this->db->prepare($check);
+            $create->execute();
+
+            $check = "CREATE TABLE IF NOT EXISTS lead_data ( ID int(11) AUTO_INCREMENT, Lead_name varchar(255) NOT NULL, Contact_number int(11), Address varchar(255) NOT NULL, City varchar(255) NOT NULL, State_name varchar(255) NOT NULL, Employment_type varchar(255) NOT NULL, Loan_status varchar(255) NOT NULL, USER_ID varchar(255) NOT NULL , PRIMARY KEY  (ID))";
+            $create = $this->db->prepare($check);
+            $create->execute();
+
+
         }
     }
 
