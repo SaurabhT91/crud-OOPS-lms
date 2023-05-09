@@ -43,7 +43,7 @@ else
 
 <div class="row">
     <div class="col-md-12 head">
-        <h5><?php echo $page_type; echo $_SESSION['USER_ID']; ?></h5>
+        <h5><?php echo $page_type; ?></h5>
 
         <!-- Back link -->
         <div class="float-right">
