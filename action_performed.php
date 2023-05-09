@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 // Include and initialize DB class
 require_once 'database_class.php';
 
@@ -28,7 +28,7 @@ if(!empty($_REQUEST['action_type']) && $_REQUEST['action_type'] == 'add') {
     $State_name = !empty($_POST['State_name'])?trim($_POST['State_name']):'';
     $employment = !empty($_POST['Employment_type'])?trim($_POST['Employment_type']):'';
     $Loan = !empty($_POST['Loan_status'])?trim($_POST['Loan_status']):'';
-    $USER_ID = !empty($_POST['USER_ID'])?trim($_POST['USER_ID']):'';
+    $USER_ID =$_SESSION['USER_ID'];
 
 
     // Validate form fields
@@ -53,10 +53,7 @@ if(!empty($_REQUEST['action_type']) && $_REQUEST['action_type'] == 'add') {
     if (empty($loan)) {
         $valErr .= 'Please enter leads loan status.<br/>';
     }
-    if (empty($USER_ID)) {
-        $valErr .= 'Please enter USER ID.<br/>';
 
-    }
 
     // Check whether user inputs are empty
     if (!empty($valErr)) {
@@ -72,7 +69,7 @@ if(!empty($_REQUEST['action_type']) && $_REQUEST['action_type'] == 'add') {
             'USER_ID'=>$USER_ID,
         );
 //            var_dump($leadData);
-        $insert = $db->insert_lead($tblName, $userData);
+        $insert = $db->insert_lead($userData,$USER_ID);
 
         if ($insert) {
             $status = 'success';
@@ -127,7 +124,7 @@ elseif(!empty($_REQUEST['action_type']) && $_REQUEST['action_type'] == 'update' 
     $State_name = !empty($_POST['State_name'])?trim($_POST['State_name']):'';
     $employment = !empty($_POST['Employment_type'])?trim($_POST['Employment_type']):'';
     $Loan = !empty($_POST['Loan_status'])?trim($_POST['Loan_status']):'';
-    $User_Id = !empty($_POST['USER_ID'])?trim($_POST['USER_ID']):'';
+    $User_Id = $_SESSION['USER_ID'];
 
     // Validate form fields
     if (empty($name)) {
@@ -171,7 +168,7 @@ elseif(!empty($_REQUEST['action_type']) && $_REQUEST['action_type'] == 'update' 
 
         );
         $conditions = array('id' => $_POST['id']);
-        $update = $db->update_lead($tblName, $userData, $conditions);
+        $update = $db->update_lead($userData, $conditions,$User_Id);
 
         if ($update) {
             $status = 'success';
@@ -205,7 +202,7 @@ elseif(!empty($_REQUEST['action_type']) && $_REQUEST['action_type'] == 'search' 
 elseif (!empty($_REQUEST['action_type']) && $_REQUEST['action_type'] == 'Login' && !empty($_POST['USER_NAME']))
 {
     $conditions = $_POST['USER_NAME'];
-    $data = $db->get_user_by_user_id('users', $conditions);
+    $data = $db->get_user_by_username('users', $conditions);
 
     if ($data['USER_PASSWORD'] === $_POST['PASSWORD'])
     {
@@ -222,8 +219,8 @@ elseif (!empty($_REQUEST['action_type']) && $_REQUEST['action_type'] == 'Login' 
     {
         echo "invalid user name  or password";
     }
-}
 
+}
 elseif(!empty($_REQUEST['action_type']) && $_REQUEST['action_type'] == 'signup')
 {
     $postData = $_POST;

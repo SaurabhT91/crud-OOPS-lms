@@ -11,6 +11,8 @@ if(!$_SESSION['LOGGED_IN'] === TRUE)
 // Include and initialize DB class
 require_once 'database_class.php';
 $db = new DB();
+//$city_DATA = $db->GET_CITY();
+//$state_DATA= $db->GET_STATE();
 
 // Fetch the user data by ID
 if(!empty($_GET['id'])){
@@ -29,7 +31,6 @@ else
     $leadData['State_name'] = '';
     $leadData['Employment_type'] = '';
     $leadData['Loan_status'] = '';
-    $leadData['USER_ID']='';
     $leadData['id']='';
     $action_type = "add";
     $page_type = "Add lead";
@@ -42,18 +43,15 @@ else
 
 <div class="row">
     <div class="col-md-12 head">
-        <h5><?php echo $page_type; ?></h5>
+        <h5><?php echo $page_type; echo $_SESSION['USER_ID']; ?></h5>
 
         <!-- Back link -->
         <div class="float-right">
-            <a href="user_page.php" class="btn btn-success"><i class="back" value="<?php $_SESSION['LOGGED_IN']=TRUE;  ?>"></i> Back</a>
+            <a href="user_page.php" class="btn btn-success"><i class="back" ></i> Back</a>
         </div>
     </div>
 
-    <!-- Status message -->
-    <?php if(!empty($statusMsg)){ ?>
-        <div class="alert alert-<?php echo $status; ?>"><?php echo $statusMsg; ?></div>
-    <?php } ?>
+
 
     <div class="col-md-12">
         <form method="post" action="action_performed.php" class="form">
@@ -72,6 +70,8 @@ else
             <div class="form-group">
                 <label for="city"> City </label>
                 <select id="city" name="City">
+
+
 
                     <option value="Delhi"<?php if($leadData['City']==="Delhi"){ echo "selected"; } ?>>Delhi</option>
                     <option value="Mumbai"<?php if($leadData['City']==="Mumbai"){ echo "selected"; } ?>>Mumbai</option>
@@ -111,15 +111,12 @@ else
 
                 <label><input type="radio" name="Loan_status" value="no"<?php if($leadData['Loan_status']==="no"){ echo "checked"; } ?>>no</label><br>
                 <label><input type="radio" name="Loan_status" value="yes"<?php if($leadData['Loan_status']==="yes"){ echo "checked"; } ?>>yes</label><br>
+            </div><br>
 
-            </div><br>
-            <div class="form-group">
-                <label>User ID</label>
-                <input type="number" name="USER_ID" value="<?php echo !empty($_POST['USER_ID'])?trim($_POST['USER_ID']):$leadData['USER_ID']; ?>" required="">
-            </div><br>
 
             <input type="hidden" name="id" value="<?php echo $leadData['id']; ?>"/>
             <input type="hidden" name="action_type" value="<?php echo $action_type; ?>"/>
+
             <input type="submit" class="form-control btn-primary" name="submit" value="Save"/>
 
         </form>

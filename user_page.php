@@ -31,9 +31,9 @@ $users = $db->get_leads_by_USER_ID('lead_data',$conditions);
     <div class="col-md-12 head">
         <h4>Lead Data</h4>
         <!-- Add link -->
-        <h5><?php echo " Hello ".$_SESSION['NAME'];?></h5>
+        <h5><?php echo " Hello ".$_SESSION['NAME']; echo " user_id :".$_SESSION['USER_ID'];?></h5>
         <div class="float-right">
-            <button><a href="form.php" class="btn btn-success"><i class="plus"></i>Add New Lead</a></button>
+            <button><a href="form.php" class="btn btn-success"><i class="plus" value="<?php echo $_SESSION['USER_ID'] ?>"></i>Add New Lead</a></button>
         </div>
         <div>
             <button><a href='logout.php' class="btn btn-danger ml-3">Sign Out</a></button>

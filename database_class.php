@@ -86,7 +86,7 @@ class DB
 
 
     }
-    public function get_user_by_user_id($table,$conditions)
+    public function get_user_by_username($table,$conditions)
     {
 
         $NAME = $conditions;
@@ -106,7 +106,7 @@ class DB
     // @param string name of the table
     // @param array the data for inserting into the table
 
-    public function insert_lead($table, $data)
+    public function insert_lead($data,$user_id)
     {
         $name=$data['Lead_name'];
         $number=$data['Contact_number'];
@@ -115,7 +115,7 @@ class DB
         $State_name=$data['State_name'];
         $Employment_type=$data['Employment_type'];
         $Loan_status=$data['Loan_status'];
-        $user_id=$data['USER_ID'];
+        $user_id=$user_id;
 
 
         $sql = "INSERT INTO lead_data (Lead_Name, Contact_number, Address, City, State_name, Employment_type, Loan_status,USER_ID) VALUES ('$name', '$number', '$address', '$City', '$State_name', '$Employment_type', '$Loan_status', '$user_id');";
@@ -144,7 +144,7 @@ class DB
     // @param array the data for updating into the table
     // @param array where condition on updating data
 
-    public function update_lead($table,$data,$conditions){
+    public function update_lead($data,$conditions,$user_id){
 
 
         $id = $conditions['id'];
@@ -155,7 +155,7 @@ class DB
         $State_name=$data['State_name'];
         $Employment_type=$data['Employment_type'];
         $Loan_status=$data['Loan_status'];
-        $user_id=$data['User_Id'];
+        $user_id= $user_id;
 
 
         $sql = "UPDATE lead_data SET Lead_name='$name',Contact_number='$number',Address='$address',City='$City',State_name='$State_name',Employment_type='$Employment_type',Loan_status='$Loan_status',USER_ID='$user_id' 
@@ -167,6 +167,19 @@ class DB
         return $data;
     }
 
+
+    public function GET_CITY()
+    {
+
+        $sql = "SELECT CITY FROM cities_states";
+        $statement = $this->db->prepare($sql);
+        $statement->execute();
+
+        $data =  $statement->fetch(PDO::FETCH_ASSOC);
+        $this->db = null;
+        return $data;
+
+    }
 
     public function SIGNUP($table, $data)
     {
