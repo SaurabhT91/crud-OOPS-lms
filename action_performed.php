@@ -237,7 +237,7 @@ elseif(!empty($_REQUEST['action_type']) && $_REQUEST['action_type'] == 'search' 
     $data = $db->get_lead_by_id('lead_data', $conditions);
     var_dump($data);
 }
-elseif (!empty($_REQUEST['action_type']) && $_REQUEST['action_type'] == 'Login' && !empty($_POST['USER_NAME']))
+elseif ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['action_type'] == 'login')
 {
     $conditions = $_POST['USER_NAME'];
     $data = $db->get_user_by_username('users', $conditions);
