@@ -7,27 +7,60 @@ if(isset($_SESSION['LOGGED_IN']))
 
 ?>
 
-
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-    <title>Login</title>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
 </head>
+<style>
+ 
+    
+    .container {
+        width: 50vw;
+        margin: auto;
+        margin-top: 12vh;
+    }
+    
+
+    
+    button {
+        font-size: large;
+    }
+    
+    h1 {
+        text-align: center;
+    }
+</style>
+
 <body>
-<h1>Login</h1>
-<form method="post" action="action_performed.php">
-    <label for="username">User Name</label>
-    <input type="text" name="USER_NAME"><br>
-    <br>
-    <label for="password">Password</label>
-    <input type="password" name="PASSWORD"><br>
-    <br>
 
-    <input type="hidden" name="action_type" value="Login"/>
-    <button>Login</button>
-    <button ><a href="user_signup.php">Sign Up</a></button>
+    <div class="container">
+        <h1>User Login</h1>
+        <form onsubmit="return false;">
 
-</form>
+            <div class="form-group">
+                <label for="">User Name</label>
+                <input type="text" name="USER_NAME">
+            </div>
+
+            <div class="form-group">
+                <label for="">Password</label>
+                <input type="password" name="PASSWORD">
+            </div>
+
+
+                <input class="form-group" type="hidden" name="action_type" value="login">
+            <div class="form-group">
+
+                <button type="submit" id="login" >Login</button>
+                <button type="submit" id="signup" >Sign Up</button>
+            </div>
+        </form>
+    </div>
+    <script src="index.js" defer></script>
 </body>
+
 </html>
