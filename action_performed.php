@@ -148,7 +148,7 @@ elseif($_SERVER['REQUEST_METHOD'] == 'DELETE'){ // If Delete request is submitte
     $sessData['status']['msg'] = $statusMsg;
     $_SESSION['sessData'] = $sessData;
 
-   header("Location: user_page.php");
+    http_response_code(200);
 
 }
 elseif($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['action_type'] == 'update' && !empty($_POST['id']))
