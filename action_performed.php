@@ -1,9 +1,21 @@
 <?php
+
+header("Access-Control-Allow-Origin: http://localhost");
+
+header("Access-Control-Allow-Methods: GET,POST,PUT,PATCH,DELETE");
+header('Access-Control-Allow-Credentials: true');
+header('Content-Type: plain/text');
+header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Methods,Access-Control-Allow-Origin, Access-Control-Allow-Credentials, Authorization, X-Requested-With");
+
+
 session_start();
 // Include and initialize DB class
 require_once 'database_class.php';
 
 $db = new DB();
+
+var_dump($_POST);
+
 
 // Database table name
 $tblName = 'lead_data';
@@ -29,7 +41,7 @@ function valid_phone($phone){
 
 
 // If Add request is submitted
-if(!empty($_REQUEST['action_type']) && $_REQUEST['action_type'] == 'add') {
+if($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['action_type'] == 'add') {
     $redirectURL = 'user_page.php';
     // Get user's input
     $postData = $_POST;
@@ -107,24 +119,26 @@ if(!empty($_REQUEST['action_type']) && $_REQUEST['action_type'] == 'add') {
         $sessData['status']['msg'] = $statusMsg;
         $_SESSION['sessData'] = $sessData;
 
-        header("location: user_page.php"   );
+        http_response_code(200);
 
     }
     else
     {
         echo "you provided invalid phone number. ";
-        echo "<a href=form.php >GO BACK</a>";
     }
 
 }
-elseif(!empty($_REQUEST['action_type']) && $_REQUEST['action_type'] == 'delete' && !empty($_GET['id'])){ // If Delete request is submitted
+elseif($_SERVER['REQUEST_METHOD'] == 'DELETE'){ // If Delete request is submitted
     // Delete data from the database
-    $conditions = array('id' => $_GET['id']);
+
+    $conditions = $_GET['deleteID'];
+
     $delete = $db->delete($tblName, $conditions);
 
     if($delete){
         $status = 'success';
         $statusMsg = 'User data has been deleted successfully!';
+       
     }else{
         $statusMsg = 'Something went wrong, please try again after some time.';
     }
@@ -134,9 +148,10 @@ elseif(!empty($_REQUEST['action_type']) && $_REQUEST['action_type'] == 'delete' 
     $sessData['status']['msg'] = $statusMsg;
     $_SESSION['sessData'] = $sessData;
 
-    header("location: user_page.php");
+   header("Location: user_page.php");
+
 }
-elseif(!empty($_REQUEST['action_type']) && $_REQUEST['action_type'] == 'update' && !empty($_POST['id']))
+elseif($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['action_type'] == 'update' && !empty($_POST['id']))
 { // If Edit request is submitted
     $redirectURL = 'form.php?id=' . $_POST['id'];
     $id=$_POST['id'];
@@ -225,7 +240,7 @@ elseif(!empty($_REQUEST['action_type']) && $_REQUEST['action_type'] == 'update' 
         $sessData['status']['msg'] = $statusMsg;
         $_SESSION['sessData'] = $sessData;
 
-        header("location: user_page.php");
+        http_response_code(200);
     }
 
 
@@ -237,8 +252,12 @@ elseif(!empty($_REQUEST['action_type']) && $_REQUEST['action_type'] == 'search' 
     $data = $db->get_lead_by_id('lead_data', $conditions);
     var_dump($data);
 }
+
 elseif ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['action_type'] == 'login')
 {
+
+   
+
     $conditions = $_POST['USER_NAME'];
     $data = $db->get_user_by_username('users', $conditions);
 
@@ -259,7 +278,7 @@ elseif ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['action_type'] == 'login'
     }
 
 }
-elseif(!empty($_REQUEST['action_type']) && $_REQUEST['action_type'] == 'signup')
+elseif($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['action_type'] == 'signup')
 {
     $postData = $_POST;
     $user_name = !empty($_POST['USER_NAME'])?trim($_POST['USER_NAME']):'';
