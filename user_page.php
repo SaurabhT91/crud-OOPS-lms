@@ -27,17 +27,26 @@ $users = $db->get_leads_by_USER_ID('lead_data',$conditions);
 
 ?>
 
+<!DOCTYPE html>
+<html>
+    <head>
+
+    </head>
+    <body>
+
+   
+    <div>
+            <button  id="new_Lead" value="<?php echo $_SESSION['USER_ID'] ?>"></i>Add New Lead</button>
+            <button  id="signOut">Sign Out</button>
+    </div>
+
 <div class="row">
     <div class="col-md-12 head">
         <h4>Lead Data</h4>
         <!-- Add link -->
         <h5><?php echo " Hello ".$_SESSION['NAME']; echo " user_id :".$_SESSION['USER_ID'];?></h5>
-        <div class="float-right">
-            <button><a href="form.php" class="btn btn-success"><i class="plus" value="<?php echo $_SESSION['USER_ID'] ?>"></i>Add New Lead</a></button>
-        </div>
-        <div>
-            <button><a href='logout.php' class="btn btn-danger ml-3">Sign Out</a></button>
-        </div>
+
+      
         <!-- Status message -->
         <?php if(!empty($statusMsg)){ ?>
             <div class="alert alert-<?php echo $status; ?>"><?php echo $statusMsg; ?></div>
@@ -72,11 +81,16 @@ $users = $db->get_leads_by_USER_ID('lead_data',$conditions);
                     <td><?php echo $row['Loan_status']; ?></td>
                     <td><?php echo $row['USER_ID']; ?></td>
                     <td><?php echo $row['id']; ?></td>
-
+                    
                     <td>
-                        <a href="form.php?id=<?php echo $row['id']; ?>" class="btn btn-warning">Update</a>
-                        <a href="action_performed.php?action_type=delete&id=<?php echo $row['id']; ?>" class="btn btn-danger" onclick="return confirm('Are you sure to delete data?');">delete</a>
+                        <button id="update" name="action_type"  value="update" onclick="updateLeadById(<?php echo $row['id']; ?>)">Update</button>
                     </td>
+                    <td>  
+                        <button id="delete-btn" name="action_type" value="delete" onclick="deleteLeadById(<?php echo $row['id']; ?>)">Delete</button>
+
+                    </td>
+                    
+                    
                 </tr>
             <?php } }else{ ?>
                 <tr><td colspan="5">No user(s) found...</td></tr>
@@ -88,4 +102,20 @@ $users = $db->get_leads_by_USER_ID('lead_data',$conditions);
             </tbody>
         </table>
     </div>
+
+
+
+
+
+    </body>
+
+    <script src="user_page.js"></script>
+
+</html>
+
+
+
+
+
+
 
