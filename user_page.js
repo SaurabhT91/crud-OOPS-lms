@@ -1,9 +1,10 @@
 function deleteLeadById(id){
   var deleteID=id;
-  fetch('http://localhost:8007/action_performed.php?'+deleteID, {'method': 'DELETE'})
+  fetch('http://localhost:8007/action_performed.php?deleteID='+deleteID, {'method': 'DELETE'})
 .then(res => res.text())
 .then(data => {
-    alert(data)
+    //alert(data)
+    location.href = "/user_page.php"
 })
 }
 
