@@ -127,10 +127,10 @@ class DB
         return $data;
     }
 
-    public function delete($table,$conditions){
+    public function delete($table,$lead_id){
         $whereSql = '';
 
-        $sql = "DELETE FROM ".$table." where id = ".$conditions['id'];
+        $sql = "DELETE FROM ".$table." where id = ".$lead_id;
         $delete = $this->db->exec($sql);
         $data =  $delete?$delete:false;
         $this->db = null;
